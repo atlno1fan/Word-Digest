@@ -5,7 +5,7 @@ from pdfPreprocessingRAG import *
 
 
 class RAG_target_paragraph_generator:
-    def init(self, link, question):
+    def __init__(self, link, question):
         self.link = link
         self.question = question
 

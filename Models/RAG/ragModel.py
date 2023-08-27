@@ -23,3 +23,30 @@ class RAG_target_paragraph_generator:
         ).to(self.device)
 
         return tokenizer, model
+
+
+    def check_link_in_text(self, text):
+        regex = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+        links = re.findall(regex, text)
+
+        for link in links:
+            try:
+                response = requests.head(link)
+                if response.status_code == 200:
+                    text = text.replace(link, "")
+                    return text, link
+            except:
+                pass
+
+        return text, self.link
+
+    def prompt_generator(self, text):
+        target_paragraph = self.get_paragraphs_RAG(text)
+        prompt = (
+            "Can you answer this question based on this text within the triple quotation markes? The question is"
+            + self.question
+            + " ''' "
+            + target_paragraph
+            + " '''"
+        )
+        return prompt

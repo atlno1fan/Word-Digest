@@ -6,7 +6,7 @@ import apiKeys
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", type=int, default="RAG")
+    parser.add_argument("--model", type=str, default="RAG")
     args = parser.parse_args()
 
     if args.model == "RAG":
